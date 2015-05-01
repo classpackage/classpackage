@@ -1,0 +1,526 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>ClassPackage</title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<link rel="stylesheet"
+	href="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+<link rel="stylesheet" href="resources/css/jquery.datetimepicker.css">
+<link rel="stylesheet" href="resources/css/index.css">
+
+<script src="http://code.jquery.com/jquery-1.8.2.min.js"></script>
+<script src="http://code.jquery.com/ui/1.11.3/jquery-ui.min.js"></script>
+<script
+	src="http://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<script type="text/javascript"
+	src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/additional-methods.min.js"></script>
+
+<script src="resources/scripts/plugins/jquery.datetimepicker.js"></script>
+<script src="resources/scripts/plugins/canvasjs.min.js"></script>
+
+<script src="resources/scripts/index.js"></script>
+<script src="resources/scripts/createRoom.js"></script>
+<script src="resources/scripts/editRoom.js"></script>
+<script src="resources/scripts/editProfile.js"></script>
+<script src="resources/scripts/student.js"></script>
+<script src="resources/scripts/room.js"></script>
+
+</head>
+<body>
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ home-Page for unauthorized Page ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="homePage">
+		<div data-role="header" class="ui-header" data-theme="b"
+			id="home-header">
+
+			<!--#################### nav bar #################### -->
+			<div data-role="navbar" class="ui-navbar" align="left" id="menu">
+				<ul id="menuId">
+					<li><h1>ClassPackage</h1></li>
+					<li>
+						<form method='post' action='LoginUser' id="loginForm"
+							name='loginForm'>
+							<table>
+								<tbody>
+									<tr id="login-info">
+										<td>Email:<br> <input type="email" class="required"
+											name="email" placeholder="user@mydomain.com" data-mini="true"
+											required pattern=[^@]+@[^@]+\.[a-zA-Z]{2,6}>
+										<td>Password:<br> <input type='password'
+											class="required" name='password' data-mini="true" required></td>
+										<td><input type="submit" value="login!"></td>
+									</tr>
+								</tbody>
+							</table>
+						</form>
+					</li>
+				</ul>
+			</div>
+		</div>
+
+		<div data-role="content" class="ui-content" role="main">
+
+			<div align=left style="padding-top: 40px">
+				<form method='post' action='signInUser' name='signInForm'
+					id='registerForm'>
+					<div>
+						<h1>
+							<b>Sign In Today.</b>
+						</h1>
+
+						<table cellspacing="2">
+							<tbody>
+								<tr>
+									<td>First Name :</td>
+									<td><input type='text' class="required" name='first_name'
+										data-mini="true"></td>
+
+								</tr>
+								<tr>
+									<td>Last Name :</td>
+									<td><input type='text' class="required" name='last_name'
+										data-mini="true"></td>
+								</tr>
+								<tr>
+									<td>Email:</td>
+									<td><input type="email" class="input" name="email"
+										placeholder="user@mydomain.com" data-mini="true" required
+										pattern=[^@]+@[^@]+\.[a-zA-Z]{2,6}></td>
+								</tr>
+								<tr>
+									<td>Password:</td>
+									<td><input type='password' class="required" minlength="4"
+										name='password' data-mini="true"></td>
+								</tr>
+								<tr>
+									<td>Confirm password:</td>
+									<td><input type='password' class="required" minlength="4"
+										name='confirm-password' data-mini="true" required></td>
+
+								</tr>
+								<tr>
+									<td>Select type:</td>
+									<td class="containing-element"><select name="isLecturer"
+										id="flip-min" data-role="slider">
+											<option value="lecturer">lecturer</option>
+											<option value="student">student</option>
+									</select>
+									<td>
+								</tr>
+								<tr>
+									<td><input type="submit" value="submit" data-mini="true"></td>
+								</tr>
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+		</div>
+		<div data-role="footer" data-theme="b" class="ui-footer" role="banner"
+			data-position="fixed" id="footer">
+			<div class="copyright">
+				<p>
+					<a href="/" class="logo"></a>
+				</p>
+				<span class="disclaimer"
+					style="font-size: 14.9px; color: #FFFFFF; line-height: 18.2px; -webkit-font-smoothing: antialiased;">©
+					ClassPackage 2015</span>
+			</div>
+
+		</div>
+	</div>
+
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ student Page ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="student">
+		<div data-role="header" class="ui-header header" data-theme="b"
+			data-position="fixed">
+			<h1>ClassPackage</h1>
+			<a href="#left-panel2" data-theme="d" data-icon="arrow-r"
+				data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+				class="ui-icon-nodisc">Open left panel</a> <a href="#right-panel2"
+				data-theme="d" data-icon="arrow-l" data-iconpos="notext"
+				data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">Open
+				right panel</a>
+		</div>
+		<!-- /header -->
+		<div data-role="content">
+			<h1 id="welcome-user"></h1>
+			<div id="join-room-details" align="center">
+				<h3 class="ui-title">Please enter the requested room
+					credentials:</h3>
+				<form method='post' id="joinRoomForm" name='joinRoomForm'>
+					<table cellspacing="2">
+						<tbody>
+							<tr>
+								<td>Room number:</td>
+								<td><input type='text' class="required"
+									name='join-room-number' id='join-room-number' data-mini="true"></td>
+							</tr>
+							<tr>
+								<td>Password:</td>
+								<td><input type='text' class="required"
+									name='join-room-password' data-mini="true"></td>
+							</tr>
+							<tr>
+								<td></td>
+								<td><button data-mini="true" id="stud-join-Room-Btn">Join
+										now</button></td>
+								<td></td>
+							</tr>
+						</tbody>
+					</table>
+				</form>
+			</div>
+		</div>
+		<!-- /content -->
+		<!-- #####panels##### -->
+
+		<div data-role="panel" id="left-panel2" data-theme="b">
+			<p>Left reveal panel.</p>
+		</div>
+		<!-- /panel -->
+		<div data-role="panel" id="right-panel2" data-display="push"
+			data-position="right" data-theme="c">
+			<ul id="menu" data-role="listview" data-inset="true"
+				class="ui-responsive">
+				<li><a href="#profile">Profile</a>
+				<li><a href="#history">My History</a>
+				<li id="createRoomOption"><a data-role="button"
+					href="#createRoomPopup" data-rel="popup" data-position-to="window"
+					data-transition="slideup">Create Room</a></li>
+			</ul>
+		</div>
+		<div data-role="popup" id="createRoomPopup" data-history="false"
+			data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+			<a href="#" data-rel="back" data-role="button" data-icon="delete"
+				data-iconpos="notext" class="ui-btn-right">Close</a>
+			<div data-role="header" data-theme="b" class="ui-corner-top">
+				<h1>Join Room :</h1>
+			</div>
+			<div data-role="content" data-theme="d"
+				class="ui-corner-bottom ui-content">
+				<h3 class="ui-title">Notice:</h3>
+				<p>
+					The option of creating room is allowed for lecturers.<br> By
+					creating a room your view will be changed to <b>"lecturer"</b> view
+				</p>
+				<a data-role="button" href="#lecturer">Switch view</a>
+			</div>
+		</div>
+	</div>
+
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ lecturer Page ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="lecturer">
+		<div data-role="header" class="ui-header header" data-theme="b"
+			data-position="fixed">
+			<h1>ClassPackage</h1>
+			<a href="#left-panel1" data-theme="d" data-icon="arrow-r"
+				data-iconpos="notext" data-shadow="false" data-iconshadow="false"
+				class="ui-icon-nodisc">Open left panel</a> <a href="#right-panel1"
+				data-theme="d" data-icon="arrow-l" data-iconpos="notext"
+				data-shadow="false" data-iconshadow="false" class="ui-icon-nodisc">Open
+				right panel</a>
+		</div>
+		<!-- /header -->
+		<div data-role="content">
+			<h1 id="welcome-user"></h1>
+			<div id="create-room-details" align="center">
+				<table cellpadding="2px">
+					<tr>
+						<td>Room Name:<input type='text' class="required"
+							id='room-name' data-mini="true" placeholder="my room"></td>
+						<td>Start Time:<input type=text
+							class="required datetimepicker" id='start_time' data-mini="true"></td>
+						<td>End Time:<input type='text'
+							class="required datetimepicker" id='end_time' data-mini="true"></td>
+					</tr>
+				</table>
+			</div>
+			<div align="center">
+				<div class="plans" align="center">
+					<div class="plan drag">
+						<h3 class="plan-title">Links</h3>
+						<img src="resources/images/bookworm.png" alt="links" id="links"
+							class="drag">
+					</div>
+					<div class="plan drag">
+						<h3 class="plan-title">Questions</h3>
+						<img src="resources/images/question.png" alt="questions"
+							id="Questions" class="drag">
+					</div>
+					<div class="plan drag">
+						<h3 class="plan-title">Alarm</h3>
+						<img src="resources/images/alarmclock.png" alt="alarm" id="alarm"
+							class="drag">
+					</div>
+					<div class="plan drag">
+						<h3 class="plan-title">Polls</h3>
+						<img src="resources/images/graph.png" alt="qraph" id="Polls">
+					</div>
+				</div>
+			</div>
+			<div class="drop" align="center">
+				<img src="resources/images/box.png" alt=box>
+				<button data-mini="true" id="submit-room-btn">create</button>
+			</div>
+		</div>
+		<!-- /content -->
+
+		<!-- #####panels##### -->
+
+		<div data-role="panel" id="left-panel1" data-theme="b">
+			<p>My rooms countdown:</p>
+			<ul id="myRooms" data-role="listview" data-inset="true">
+			</ul>
+			<p>Active room:</p>
+			<ul id="myActiveRoom" data-role="listview" data-inset="true">
+			</ul>
+		</div>
+		<!-- /panel -->
+		<div data-role="panel" id="right-panel1" data-display="push"
+			data-position="right" data-theme="c">
+			<ul id="menu" data-role="listview" data-inset="true"
+				class="ui-responsive">
+				<li><a href="#profile">Profile</a>
+				<li><a href="#existing">My Rooms</a>
+				<li id="joinRoomOption"><a data-role="button"
+					href="#joinRoomPopup" data-rel="popup" data-position-to="window"
+					data-transition="slideup">Join Room</a></li>
+			</ul>
+		</div>
+
+
+		<!--####################join Room pop up#################### -->
+		<div data-role="popup" id="joinRoomPopup" data-history="false"
+			data-overlay-theme="a" data-dismissible="false" class="ui-corner-all">
+			<a href="#" data-rel="back" data-role="button" data-icon="delete"
+				data-iconpos="notext" class="ui-btn-right">Close</a>
+			<div data-role="header" data-theme="b" class="ui-corner-top">
+				<h1>Join Room :</h1>
+			</div>
+			<div data-role="content" data-theme="d"
+				class="ui-corner-bottom ui-content">
+				<h3 class="ui-title">Please enter the requested room
+					credentials:</h3>
+				<form method='post' id="joinForm" name='joinForm'>
+					<table cellspacing="2">
+						<tbody>
+							<tr>
+								<td>Room number:</td>
+								<td><input type='text' class="required" name='room_id'
+									data-mini="true"></td>
+							</tr>
+							<tr>
+								<td>Password:</td>
+								<td><input type='text' class="required"
+									name='room_password' data-mini="true"></td>
+							</tr>
+						</tbody>
+					</table>
+					<div align="center" style="padding-top: 30px">
+						<input type="submit" data-mini="true" data-mini="true"
+							value="Join now">
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ my rooms Page-lecturer ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="existing">
+		<div data-role="header" class="ui-header header" data-theme="b"
+			data-position="fixed">
+			<div>
+				<a data-rel="back" style="color: #ffffff; font-size: 30px">ClassPackage</a>
+			</div>
+		</div>
+		<div data-role="content" class="ui-content" role="main" align="center">
+			<div style='width: 50% ; height: 100% ; position:fixed ; left:0;'>
+			<h3>active rooms</h3>
+			<div id="activateRooms" ></div>
+			</div>
+			<div style='width: 50% ; height: 100% ; position:fixed ; left:50%;'>
+			<h3>my rooms</h3>
+					<div id="existingRooms"></div>
+			</div>
+		</div>
+	</div>
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ edit room Page ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="editRoom">
+		<div data-role="header" class="ui-header header" data-theme="b"
+			data-position="fixed">
+			<div>
+				<a data-rel="back" style="color: #ffffff; font-size: 30px">ClassPackage</a>
+			</div>
+		</div>
+		<div data-role="content" class="ui-content" role="main">
+			<h1>Room edit</h1>
+
+			<nav id="edittabs">
+				<ul class="clearfix">
+					<li class="tab caps"><a href="#room-settings"
+						data-history="false">Settings</a>
+						<div class="arrow-down"></div></li>
+					<li class="tab caps"><a href="#edit-features"
+						data-history="false">Features</a>
+						<div class="arrow-down"></div></li>
+				</ul>
+			</nav>
+			<section id="room-settings">
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>Room Name: </b><img src="resources/images/edit.png"
+								id="edit-img-roomName" class="edit" alt="*Edit*"></td>
+							<td id="roomName-input"></td>
+							<td id="roomName-input-edit" class="edit-input"
+								style="padding-left: 255px;"><input type='text'
+								id="roomName-edit" name='roomName' placeholder="my room"
+								data-mini="true"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>Start Time: </b><img src="resources/images/edit.png"
+								id="edit-img-roomStartTime" class="edit" alt="*Edit*"></td>
+							<td id="roomStartTime-input"></td>
+							<td class="edit-input start" style="padding-left: 160px;"><input
+								type='text' id='edit-start-time' class="datetimepicker"
+								data-mini="true"></td>
+						</tr>
+					</table>
+				</div>
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>End Time: </b><img src="resources/images/edit.png"
+								id="edit-img-roomEndTime" class="edit" alt="*Edit*"></td>
+							<td id="roomEndTime-input"></td>
+							<td class="edit-input end" style="padding-left: 160px;"><input
+								type='text' id='edit-end-time' class="datetimepicker"
+								data-mini="true"></td>
+						</tr>
+					</table>
+				</div>
+				<div style="padding-top: 40px;">
+					<button id="edit-room-btn" class="hidden">submit changes</button>
+				</div>
+			</section>
+
+			<section id="edit-features" class="hidden">polls settings
+				here quiz settings here alarm settings here links settings here</section>
+		</div>
+	</div>
+
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ profile Page ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="profile">
+	<div data-role="header" class="ui-header header" data-theme="b"
+			data-position="fixed">
+			<div>
+				<a id="back-from-profile" style="color: #ffffff; font-size: 30px">ClassPackage</a>
+			</div>
+	</div>
+		<div data-role="content" class="ui-content" role="main">
+			<h1>Profile edit</h1>
+
+			<section id="profile-settings">
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>first name: </b>
+							<td id="userFirstName-input"></td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>last name: </b>
+							<td id="userLastName-input"></td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>email: </b><img src="resources/images/edit.png"
+								id="edit-img-userEmail" class="edit" alt="*Edit*"></td>
+							<td id="userEmail-input"></td>
+							<td id="userEmail-input-edit" class="edit-input"
+								style="padding-left: 255px;"><input type="email"
+								class="required" id="userEmail-edit" name='email'
+								placeholder="user@mydomain" data-mini="true" required
+								pattern=[^@]+@[^@]+\.[a-zA-Z]{2,6}></td>
+						</tr>
+					</table>
+				</div>
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>password: </b><img src="resources/images/edit.png"
+								id="edit-img-userPassword" class="edit" alt="*Edit*"></td>
+							<td id="userPassword-input-edit" class="edit-input"
+								style="padding-left: 255px;"><input type="password"
+								id='userOldPassword-edit' name='oldPassword'
+								placeholder="old password" data-mini="true"> <input
+								type='password' id='userNewPassword-edit' name='newpassword'
+								placeholder="new password" data-mini="true"></td>
+						</tr>
+					</table>
+				</div>
+
+				<div class="setting">
+					<table>
+						<tr>
+							<td><b>type: </b><img src="resources/images/edit.png"
+								id="edit-img-userType" class="edit" alt="*Edit*"></td>
+							<td id="userType-input"></td>
+
+							<td class="containing-element edit-input" id="userType-input-edit"
+								class="edit-input" style="padding-left: 255px;"><select
+								name="isLecturer" id="flip-type" data-role="slider">
+									<option value="lecturer">lecturer</option>
+									<option value="student">student</option>
+							</select></td>
+						</tr>
+					</table>
+				</div>
+
+				<div style="padding-top: 40px;">
+					<button id="edit-profile-btn" class="hidden">submit changes</button>
+						<img id = "delete-profile-btn" src= "resources/images/trash.png" style="cursor: pointer;"></img>
+				</div>
+			</section>
+		</div>
+	</div>
+	<!--~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ active Room ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~ -->
+	<div data-role="page" id="activeroom">
+		<div data-role="header" class="ui-header header" data-theme="b"
+			data-position="fixed">
+			<div>
+				<a data-rel="back" style="color: #ffffff; font-size: 30px">ClassPackage</a>
+			</div>
+			<div id="room-header">
+				<h4 id="active-room-name" style="padding-top: 10px;"></h4>
+			</div>
+		</div>
+		<div data-role="content" class="ui-content" role="main"
+			id="room-content">
+			<div id="studRate" class="hidden" align="center">
+				<h2>HOW AM I DOING?</h2>
+				<div id="stud-rate" data-role="fieldcontain" style="width: 80%">
+					<input type="range" id="stud-rate-slider" value="3" min="0"
+						max="5" data-theme="a" data-track-theme="b" />
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
