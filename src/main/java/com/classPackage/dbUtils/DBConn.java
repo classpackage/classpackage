@@ -20,6 +20,10 @@ public class DBConn {
 	private static final String USER_NAME = "root"; // "root";
 	private static final String PASSWORD = ""; // "xampp2013";
 	
+	//Database: classpackageapp User: adminCScc2Df Password: show
+	private static final String LIVE_USER_NAME = "adminCScc2Df"; // "root";
+	private static final String LIVE_PASSWORD = "show"; // "xampp2013";
+	
 	static {
 		try {
 			System.out.println("Loading the driver...");
@@ -31,10 +35,14 @@ public class DBConn {
 				parseUrlFromEnvVarsAndConnect(jsonEnvVars);
 			} else {
 				// Runs locally - only for maintenance
-				String url = "jdbc:mysql://localhost/classPack_db";
+			/*	String url = "jdbc:mysql://localhost/classPack_db";
 				System.out.println("Connected local host url=" + url);
-				conn = DriverManager.getConnection(url, USER_NAME, PASSWORD);
-
+				conn = DriverManager.getConnection(url, USER_NAME, PASSWORD);*/
+				
+				// Runs live - remark local
+				String url = "jdbc:mysql://localhost/classpackageapp";
+				System.out.println("Connected local host url=" + url);
+				conn = DriverManager.getConnection(url, LIVE_USER_NAME, LIVE_PASSWORD);
 			}
 
 			System.out.println((new StringBuilder("conn successed. conn="))
